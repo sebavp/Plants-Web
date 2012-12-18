@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*
 import mimetypes
+import json
 
-from bottle import request
+from bottle import request, response
 from dropbox import client, rest, session
 
 # XXX Fill in your consumer key and secret below
@@ -67,8 +68,9 @@ def search_form():
 def search():
     image = request.POST.get('photo')
     descriptors,ax,bx,ay,by = EFD(Threshold(image.file).process(), 50, 100).fourier_coefficients()
-    plant = Plant.search(request.db, descriptors)
-    return plant
+    plants = Plant.search(request.db, descriptors)
+    response.headers['Content-type'] = 'application/json'
+    return json.dumps(plants)
 
 class StoredSession(session.DropboxSession):
     """a wrapper around DropboxSession that stores a token to a file on disk"""
