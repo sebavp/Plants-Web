@@ -6,7 +6,6 @@ from urllib import quote
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 from bottle import request, response
-from dropbox import client, rest, session
 
 
 from plants_dal import Plant
@@ -21,6 +20,7 @@ def add_form():
 def add():
     image = request.POST.get('photo')
     name = request.POST.get('name')
+    common_name = request.POST.get('common_name')
     plant = Plant.retrieve(request.db, name)
     if plant: return "This species is already in the DB"
     if image is not None:
@@ -34,7 +34,7 @@ def add():
         key.set_acl("public-read")
         
         descriptors,ax,bx,ay,by = EFD(Threshold(image.file).process(), 50, 100).fourier_coefficients()
-        return Plant({'name': name, 'wiki': request.POST.get('wiki'), 'photo': 'https://s3.amazonaws.com/db_leaves/%s' % quote(name), 'descriptors':descriptors}).save(request.db)
+        return Plant({'name': name,'common_name':common_name, 'wiki': request.POST.get('wiki'), 'photo': 'https://s3.amazonaws.com/db_leaves/%s' % quote(name), 'descriptors':descriptors}).save(request.db)
     return []
 
 def search_form():

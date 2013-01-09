@@ -4,9 +4,25 @@
 	<head></head>
 	<body>
 		<form method="POST" action="/plants/add" enctype="multipart/form-data">
-			<input name='name' />
-			<input type='file' name='photo' />
-			<input type='submit' value='Submit'>
+		  <fieldset>
+		    <ol>
+		      <li>
+			<label>name:</label><input name='name' />
+		      </li>
+		      <li>
+			<label>Common name:</label><input name='common_name' />
+		      </li>
+		      <li>
+			<label>Wiki:</label><input name='wiki' />
+		      </li>
+		      <li>
+			<label>photo:</label><input type='file' name='photo' />
+		      </li>
+		      <li>
+			<input type='submit' value='Submit'/>
+		      </li>
+		    </ol>
+		  </fieldset>
 		</form>
 	</body>
 </html>
