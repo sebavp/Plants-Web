@@ -11,6 +11,7 @@ from bottle import request, response
 from plants_dal import Plant
 from plants_libs.threshold import Threshold
 from plants_libs.EFD import EFD
+from plants_libs.timeit import timeit
 from plants_web.libs.templates import render_template
 
 
@@ -40,6 +41,7 @@ def add():
 def search_form():
     return render_template('search.html')
 
+@timeit
 def search():
     image = request.POST.get('photo')
     descriptors,ax,bx,ay,by = EFD(Threshold(image.file).process(), 50, 100).fourier_coefficients()
