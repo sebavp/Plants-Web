@@ -18,6 +18,9 @@ from plants_web.libs.templates import render_template
 def add_form():
     return render_template('add_plant.html')
 
+def add_sample_form():
+    return render_template('add_sample.html')
+
 def add():
     image = request.POST.get('photo')
     name = request.POST.get('name')
@@ -36,6 +39,15 @@ def add():
         
         descriptors,ax,bx,ay,by = EFD(Threshold(image.file).process(), 50, 100).fourier_coefficients()
         return Plant({'name': name,'common_name':common_name, 'wiki': request.POST.get('wiki'), 'photo': 'https://s3.amazonaws.com/db_leaves/%s' % quote(name), 'descriptors':descriptors}).save(request.db)
+    return []
+
+def add_sample():
+    image = request.POST.get('photo')
+    name = request.POST.get('name')
+    if image is not None:
+        
+        descriptors,ax,bx,ay,by = EFD(Threshold(image.file).process(), 50, 100).fourier_coefficients()
+        return Plant.add_sample(request.db, name, descriptors)
     return []
 
 def search_form():

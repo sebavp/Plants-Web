@@ -41,7 +41,7 @@ if os.environ.get('PLANTS_WEB_CONFIG'):
 elif len(sys.argv) > 1:
     config_path = sys.argv[1]
 else:
-    config_path = os.path.join('/home/production/configs/local.cfg')
+    config_path = os.path.join('/home/ubuntu/Plants-Web/scripts/local.cfg')
 
 #Reading config file
 config_dict = config_parser_dict(config_path)
